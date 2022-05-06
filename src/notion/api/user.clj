@@ -1,8 +1,9 @@
 (ns notion.api.user
   (:require [notion.api.request :refer [send-request]]))
 
-(defn get-users [notion-bot]
-  (:results (send-request :get "/users" notion-bot)))
+(defn get-users [client]
+  (:results (send-request :get "/users" client)))
 
-(defn get-user [notion-bot id]
-  (send-request :get (str "/users/" id) notion-bot))
+(defn get-user [client id]
+  (let [path (str "/users/" id)]
+    (send-request :get path client)))

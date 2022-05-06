@@ -9,37 +9,12 @@
 ; curl -i -u PenguinboiBoi12:$token https://api.github.com/repos/semiweb/nagano/issues
 (ns notion.core
   (:require
-    [notion.notion :refer [init-bot]]
+    [clojure.edn :as edn]
+    [notion.client :as client]
     [notion.api.user :as user])
   (:gen-class))
 
-(defn display-users [notion-bot]
-  (loop [users (user/get-users notion-bot)]
-    (when-let [user (first (seq users))]
-      (println user)-
-      (recur (rest users)))))
-
-; (deftype Response [notion-bot code raw])
-;
-; (deftype User [id name avatar-url type type-info response])
-;
-; (defn make-user [response]
-;   (let [raw-user (.raw response)]
-;     (->User (:id raw-user)
-;             (:name raw-user)
-;             (:avatar-url raw-user)
-;             (:type raw-user)
-;             (:type-info raw-user)
-;             response)))
-
-; (defn -main [& args]
-;   (let [notion-bot (init-bot)
-;         raw-user (get-user notion-bot "4f1f6522-00ea-4e37-9ffc-0477a302c4c1")
-;         user (make-user (->Response notion-bot 200 raw-user))]
-;
-;     (println (.name user))))
-
 (defn -main [& args]
-  (def notion-bot (init-bot))
-
-  (display-users notion-bot))
+  (let [client (client/init!)
+        user (user/get-user client "4175e406-b678-4e16-9988-c866583daaa6")]
+    (:name user)))
