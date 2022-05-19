@@ -1,6 +1,6 @@
-(ns notion.api.request
+(ns notion.api
   (:gen-class)
-  (:require [clj-http.client :as http]
+  (:require [clj-http.client :as client]
             [clojure.data.json :as json]))
 
 (defonce ^:private notion-version "2022-02-22")
@@ -21,7 +21,7 @@
 (defn send-request
   ([method path client params]
     (let [request (build-request method path client params)
-          response (http/request request)]
+          response (client/request request)]
       (if (= 200 (:status response))
         (json/read-str (:body response) :key-fn keyword))))
   ([method path client]

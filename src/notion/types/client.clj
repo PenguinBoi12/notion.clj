@@ -3,6 +3,6 @@
 (defprotocol ClientProtocol
   (token [this]))
 
-(defrecord Client [config]
+(deftype Client [config]
   ClientProtocol
   (token [_] (:token config)))
