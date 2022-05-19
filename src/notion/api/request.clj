@@ -7,13 +7,10 @@
 (defonce ^:private user-agent (format "notion.clj - Notion v%s" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
 
-(defn- build-url [path]
-  (str base-url path))
-
 (defn- build-request [method path client params]
   (let [url (build-url path)]
     {:method method,
-     :url url
+     :url (str base-url path)
      :form-params params,
      :user-agent user-agent,
      :headers {:Notion-Version notion-version},
