@@ -6,17 +6,10 @@
   (:import [java.io IOException]))
 
 (defonce ^:private default-config-path "resources/config.edn")
-; We might need to handle path like search diffrently to avoid using it with get
-; Maybe limiting some route to specefic method (like get, put, ...) and throw
-; an error if the method is not allowed
-;
-; :search {:path "/search", :methods [:post]}
-;
 (defonce ^:private routes {:user "/users"
                            :page "/pages"
                            :database "/databases"
-                           :block "/blocks"
-                           :search "/search"})
+                           :block "/blocks"})
 
 (defn load-config [filename]
   (try
@@ -29,9 +22,9 @@
     (->Client config)))
 
 (defn fetch
-  ([model client]
+  ([client model]
     (:results (api/send-request :get (get routes model) client)))
-  ([model client id]
+  ([client model id]
     (let [path (str (get routes model) "/" id)]
       (api/send-request :get path client))))
 
