@@ -2,8 +2,6 @@
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]))
 
-;  Might need to be renamed to base
-
 (defonce ^:private notion-version "2022-02-22")
 (defonce ^:private user-agent (format "notion.clj - Notion v%s" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
