@@ -12,21 +12,31 @@
                        :cover :cover
                        ; :properties :properties
                        :parent :parent-id
+                       :parent-type :parent-type
                        :url :url
                        :archived :archived?}]
     (-> m
       (select-keys (keys database-keys))
       (rename-keys database-keys))))
 
-(defrecord Database [id title icon cover parent-id archived? created-time
-                     created-by-id last-edited-time last-edited-by-id url])
+; put this somewhere reusable
+(def types-by-key {:page_id :page,
+                   :database_id :database,
+                   :workspace_id :workspace})
+
+(defrecord Database [id title icon cover parent-id parent-type archived?
+                     created-time created-by-id last-edited-time
+                     last-edited-by-id url])
 
 ; Add the parent, created-by and last-edited-by type?
 (defn build-database [m]
+  (def parent-type (keyword (:type (:parent m))))
+
   (-> (format-map m)
     (update :title #(:content (:text (first %))))
     (update :icon :emoji)
     (update :created-by-id :id)
     (update :last-edited-by-id :id)
-    (update :parent-id :page_id)
+    (update :parent-id parent-type)
+    (assoc :parent-type (parent-type types-by-key))
     (map->Database)))

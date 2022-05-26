@@ -37,3 +37,15 @@
 
 (defn page [client id]
   (build-page (api/fetch client :page id)))
+
+(defn parent [client model]
+  (let [id (:parent-id model),
+        type (:parent-type model)
+        func (type {:page page, :database database})]
+    (func client id)))
+
+(defn created-by [client model]
+  (user client (:created-by-id model)))
+
+(defn last-edited-by [client model]
+  (user client (:last-edited-by-id model)))
