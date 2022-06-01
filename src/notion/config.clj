@@ -1,0 +1,12 @@
+(ns notion.config
+  (:require [clojure.edn :as edn])
+  (:import [java.io IOException]))
+
+(defn load-config [filename]
+  (try
+    (edn/read-string (slurp filename))
+    (catch IOException e
+      (throw (ex-info "Can't load the configuration!" {:file filename})))))
+
+(defn load-default-config []
+  (load-config "resources/config.edn"))
