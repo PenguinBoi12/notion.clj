@@ -9,6 +9,7 @@
                  [org.clojure/data.json "0.2.6"]
                  [clj-http/clj-http "3.12.3"]
                  [clj-time/clj-time "0.14.4"]
+                 [cheshire "5.11.0"]
                  [integrant/repl "0.3.2"]
                  [nrepl/nrepl "0.8.3"]]
   :main ^:skip-aot notion.core
