@@ -19,7 +19,7 @@
     (api/search client query {})))
 
 (defn user [client id]
-  (go (>! (api/fetch client :user id))))
+  (build-user (api/fetch client :user id)))
 
 
 (defn users [client]
