@@ -1,5 +1,6 @@
 (ns notion.client
   (:require
+    [clojure.core.async :refer [>! <! >!! <!! go] :as async]
     [notion.api.utils :as api]
     [notion.config :refer [load-default-config]]
     [notion.types.user :refer [build-user]]
@@ -18,7 +19,8 @@
     (api/search client query {})))
 
 (defn user [client id]
-  (build-user (api/fetch client :user id)))
+  (go (>! (api/fetch client :user id))))
+
 
 (defn users [client]
   (map build-user (api/fetch client :user)))
