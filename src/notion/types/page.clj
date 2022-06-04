@@ -1,23 +1,19 @@
 (ns notion.types.page
-  (:require [clojure.set :refer [rename-keys]]))
+  (:require [notion.utils :refer [format-type-map]]))
 
-(defn- format-map [m]
-  (let [database-keys {:id :id
-                       :created_time :created-time
-                       :created_by :created-by-id
-                       :last_edited_time :last-edited-time
-                       :last_edited_by :last-edited-by-id
-                       :title :title
-                       :icon :icon
-                       :cover :cover
-                       ; :properties :properties
-                       :parent :parent-id
-                       :parent-type :parent-type
-                       :url :url
-                       :archived :archived?}]
-    (-> m
-      (select-keys (keys database-keys))
-      (rename-keys database-keys))))
+(def page-keys {:id :id
+                :created_time :created-time
+                :created_by :created-by-id
+                :last_edited_time :last-edited-time
+                :last_edited_by :last-edited-by-id
+                :title :title
+                :icon :icon
+                :cover :cover
+                ; :properties :properties
+                :parent :parent-id
+                :parent-type :parent-type
+                :url :url
+                :archived :archived?})
 
 ; put this somewhere reusable
 (def types-by-key {:page_id :page,
@@ -32,7 +28,7 @@
 (defn build-page [m]
  (def parent-type (keyword (:type (:parent m))))
 
- (-> (format-map m)
+ (-> (format-type-map m)
    (update :title #(:content (:text (first %))))
    (update :icon :emoji)
    (update :created-by-id :id)

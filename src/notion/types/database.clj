@@ -1,5 +1,5 @@
 (ns notion.types.database
-  (:require [notion.utils :as utils]))
+  (:require [notion.utils :refer [format-type-map]]))
 
 (def database-keys {:id :id
                     :created_time :created-time
@@ -25,7 +25,7 @@
 
 (defn build-database [m]
   (let [parent-type (keyword (:type (:parent m)))]
-    (-> (utils/format-type-map m database-keys)
+    (-> (format-type-map m database-keys)
       (update :title #(:content (:text (first %))))
       (update :icon :emoji)
       (update :created-by-id :id)

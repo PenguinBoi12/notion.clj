@@ -1,5 +1,5 @@
 (ns notion.types.block
-  (:require [notion.utils :as utils]))
+  (:require [notion.utils :refer [format-type-map]]))
 
 (def block-keys {:id :id
                  :type :type
@@ -17,7 +17,7 @@
 
 (defn build-block [m]
   (let [type (keyword (:type m)) rich-text (first (:rich_text (type m)))]
-    (-> (utils/format-type-map m block-keys)
+    (-> (format-type-map m block-keys)
       (update :created-by-id :id)
       (update :last-edited-by-id :id)
       (assoc :annotations (:annotations rich-text))
