@@ -1,11 +1,11 @@
 (ns notion.client
   (:require
-    [clojure.core.async :refer [>! <! >!! <!! go] :as async]
     [notion.api.utils :as api]
     [notion.config :refer [load-default-config]]
     [notion.types.user :refer [build-user]]
     [notion.types.page :refer [build-page]]
     [notion.types.database :refer [build-database]]
+    [notion.types.block :refer [build-block]]
     [notion.types.client :refer :all]))
 
 (defn init! [& config-path]
@@ -21,7 +21,6 @@
 (defn user [client id]
   (build-user (api/fetch client :user id)))
 
-
 (defn users [client]
   (map build-user (api/fetch client :user)))
 
@@ -30,6 +29,9 @@
 
 (defn page [client id]
   (build-page (api/fetch client :page id)))
+
+(defn block [client id]
+  (build-block (api/fetch client :block id)))
 
 (defn parent [client model]
   (let [id (:parent-id model),

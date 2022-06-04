@@ -20,7 +20,7 @@
 (defn send-request
   ([method path client params]
     (let [request (build-request method path client params)
-          response (client/request request, {:async true)]
+          response (client/request request)]
       (if (= 200 (:status response))
         (json/read-str (:body response) :key-fn keyword))))
   ([method path client]
