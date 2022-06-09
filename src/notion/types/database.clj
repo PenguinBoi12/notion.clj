@@ -9,7 +9,7 @@
                     :title :title
                     :icon :icon
                     :cover :cover
-                    ; :properties :properties
+                    :properties :properties ; Needs to implement this correctly
                     :parent :parent-id
                     :parent-type :parent-type
                     :url :url

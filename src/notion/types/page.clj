@@ -9,13 +9,12 @@
                 :title :title
                 :icon :icon
                 :cover :cover
-                ; :properties :properties
+                :properties :properties ; Needs to implement this correctly
                 :parent :parent-id
                 :parent-type :parent-type
                 :url :url
                 :archived :archived?})
 
-; put this somewhere reusable
 (def types-by-key {:page_id :page,
                    :database_id :database,
                    :workspace_id :workspace})
