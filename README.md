@@ -4,8 +4,20 @@ their [API](https://developers.notion.com/).
 
 # Getting started
 ### Installation
-- Install [lein](https://leiningen.org/) (optional)
-- _Still in construction_
+For now, the library is only available through github or locally with [Clojure deps.edn](https://clojure.org/guides/deps_and_cli). 
+
+#### Locally 
+```edn
+{:deps
+  {io.github.PenguinBoi12/notion.clj {:root/local "latest" "..."}}}
+```
+
+#### Clojure deps with github
+```edn
+{:deps
+  {io.github.PenguinBoi12/notion.clj {:git/tag "stable" :git/sha "e294812"}}}
+```
+
 
 ### Configuration
 - For this part, follow [Notion's guide](https://developers.notion.com/docs/getting-started#getting-started).
@@ -19,7 +31,7 @@ their [API](https://developers.notion.com/).
 
 (defn -main [& args]
   (let [client (client/init!)
-        user (client/user client "...")]
+        user (client/user client "user-id")]
     (println user))))
 ```
 
