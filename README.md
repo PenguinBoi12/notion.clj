@@ -15,7 +15,7 @@ For now, the library is only available through github or locally with [Clojure d
 #### Clojure deps with github
 ```edn
 {:deps
-  {io.github.PenguinBoi12/notion.clj {:git/tag "stable" :git/sha "e294812"}}}
+  {io.github.PenguinBoi12/notion.clj {:git/tag "v0.0.1" :git/sha "b945f5e"}}}
 ```
 
 
