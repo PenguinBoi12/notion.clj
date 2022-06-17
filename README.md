@@ -30,4 +30,4 @@ current features or even by adding your own. If you want to contribute but don't
 [issues](https://github.com/PenguinBoi12/notion.clj/issues) page.
 
 # License
-Distributed under the MIT License.
+Distributed under the GNU General Public License v3.0
