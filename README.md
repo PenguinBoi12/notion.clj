@@ -9,7 +9,7 @@ their [API](https://developers.notion.com/).
 
 ### Configuration
 - For this part, follow [Notion's guide](https://developers.notion.com/docs/getting-started#getting-started).
-- Once you have you your [integration](https://www.notion.so/my-integrations) setup, create a `resources` folder a config file named `config.edn` then add `{:token "You token here"}` into it.
+- Once you have you your [integration](https://www.notion.so/my-integrations) setup, create a `resources` folder and a config file named `config.edn` then add `{:token "You token here"}` into it.
 
 # Example(s)
 ### Retrive a user
