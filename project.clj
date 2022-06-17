@@ -1,4 +1,4 @@
-(defproject notion-clj/notion-clj "0.0.1-SNAPSHOT"
+(defproject notion.clj/notion.clj "0.0.1"
   :description "A notion api wrapper in Clojure"
   :url "https://github.com/penguinboi/notion.clj"
   :license {:name "Apache License, Version 2.0"
