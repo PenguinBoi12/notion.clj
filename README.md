@@ -9,7 +9,7 @@ For now, the library is only available through github or locally with [Clojure d
 #### Locally 
 ```edn
 {:deps
-  {io.github.PenguinBoi12/notion.clj {:root/local "latest" "..."}}}
+  {io.github.PenguinBoi12/notion.clj {:root/local "path/to/library/notion.clj"}}}
 ```
 
 #### Clojure deps with github
