@@ -4,13 +4,12 @@ their [API](https://developers.notion.com/).
 
 # Getting started
 ### Installation
-- Install [lein](https://leiningen.org/)
+- Install [lein](https://leiningen.org/) (optional)
 - _Still in construction_
 
 ### Configuration
 - For this part, follow [Notion's guide](https://developers.notion.com/docs/getting-started#getting-started).
-- Once you have you your [integration](https://www.notion.so/my-integrations) setup, create in `resources` a your config file named `config.edn`. Copy
-the templated provided in `resources` and replace `Insert token to play!` by your token.
+- Once you have you your [integration](https://www.notion.so/my-integrations) setup, create a `resources` folder a config file named `config.edn` then add `{:token "You token here"}` into it.
 
 # Example(s)
 ### Retrive a user
