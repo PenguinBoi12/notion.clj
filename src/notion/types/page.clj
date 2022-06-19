@@ -1,5 +1,5 @@
 (ns notion.types.page
-  (:require [notion.utils :refer [format-type-map]]))
+  (:require [notion.types.utils :refer [format-type-map]]))
 
 (def page-keys {:id :id
                 :created_time :created-time

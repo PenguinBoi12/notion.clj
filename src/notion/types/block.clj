@@ -1,5 +1,5 @@
 (ns notion.types.block
-  (:require [notion.utils :refer [format-type-map]]))
+  (:require [notion.types.utils :refer [format-type-map]]))
 
 (def block-keys {:id :id
                  :type :type

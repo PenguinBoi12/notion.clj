@@ -1,5 +1,5 @@
 (ns notion.types.database
-  (:require [notion.utils :refer [format-type-map]]))
+  (:require [notion.types.utils :refer [format-type-map]]))
 
 (def database-keys {:id :id
                     :created_time :created-time
