@@ -1,4 +1,4 @@
-(ns notion.utils
+(ns notion.types.utils
   (:require [clojure.set :refer [rename-keys]]))
 
 (defn format-type-map [m to-rename-keys]
