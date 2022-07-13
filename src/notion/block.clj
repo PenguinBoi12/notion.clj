@@ -1,7 +1,5 @@
 (ns notion.block
-  (:require
-    [notion.api.utils :as api]
-    [notion.types.block :refer [build-block]]))
+  (:require [notion.api.utils :as api]))
 
 (defn create! [client block])
 
