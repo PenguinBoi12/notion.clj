@@ -19,15 +19,14 @@
                    :database_id :database,
                    :workspace_id :workspace})
 
+(defrecord Page [id created-time created-by-id last-edited-time
+                 last-edited-by-id archived? icon cover properties parent-id
+                 parent-type url])
 
-(defrecord Page [id created-time created-by-id last-edited-time last-edited-by-id
-                 archived? icon cover properties parent-id parent-type url])
-
-; Add the parent, created-by and last-edited-by type?
 (defn build-page [m]
  (def parent-type (keyword (:type (:parent m))))
 
- (-> (format-type-map m)
+ (-> (format-type-map m page-keys)
    (update :title #(:content (:text (first %))))
    (update :icon :emoji)
    (update :created-by-id :id)
