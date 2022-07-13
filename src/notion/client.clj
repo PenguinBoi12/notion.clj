@@ -1,6 +1,6 @@
 (ns notion.client
   (:require
-    [notion.api.utils :as api]
+    [notion.api :as api]
     [notion.config :refer [load-default-config]]
     [notion.types.user :refer [build-user]]
     [notion.types.page :refer [build-page]]

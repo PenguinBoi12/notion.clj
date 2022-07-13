@@ -1,5 +1,5 @@
 (ns notion.page
-  (:require [notion.api.utils :as api]))
+  (:require [notion.api :as api]))
 
 (defn create! [client page])
 
