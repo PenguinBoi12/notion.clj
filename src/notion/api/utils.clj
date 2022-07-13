@@ -14,7 +14,13 @@
     (let [path (str (get model-routes model) "/" id)]
       (send-request :get path client))))
 
+(defn delete! [client model id]
+  "Deletes the given object"
+  (let [path (str (get model-routes model) (str "/" id))]
+    (send-request :delete path client)))
+
 (defn search
+  "Search corresponding item for the given models."
   ([client query options]
     (let [options (merge {:query query} options)]
       (send-request :post "/search" client ))))
