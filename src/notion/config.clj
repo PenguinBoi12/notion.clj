@@ -1,8 +1,12 @@
-(ns notion.config
+(ns ^{:doc "Client configs functions"
+      :author "Simon Roy"}
+  notion.config
   (:require [clojure.edn :as edn])
   (:import [java.io IOException]))
 
-(defn load-config [filename]
+(defn load-config
+  "Reads and returns the content of the given edn file"
+  [filename]
   (try
     (edn/read-string (slurp filename))
     (catch IOException e
