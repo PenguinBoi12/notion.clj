@@ -1,30 +1,28 @@
 (ns notion.api
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
-            [slingshot.slingshot :refer [throw+]]))
+            [clojure.string :as string]))
 
 (defonce ^:private notion-version "2022-02-22")
-(defonce ^:private user-agent (format "notion.clj - Notion v%s" notion-version))
+(defonce ^:private user-agent (str "notion.clj - Notion v" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
-(defonce ^:private model-routes {:user "/users/"
-                                 :page "/pages/"
-                                 :database "/databases/"
-                                 :block "/blocks/"})
 
-(defn- get-route
-  "Returns the path of the given model."
-  ([model-keyword]
-    (if-not (contains? model-routes model-keyword)
-      (throw+ {:type :invalid-key
-               :key model-keyword
-               :hint "Only the follwing keys are valid :user, :page, :database and :block"}))
-    (get model-routes model-keyword))
-  ([model-keyword id]
-    (str (get-route model-keyword) id)))
+(defn build-route
+  "Builds the complete route needed to make a request.
 
-(defn- build-request [method path client params]
+  path-params is a map containing the keys and the values that needs to be
+  interpolated into the path string.
+
+  Ex.
+   path        = projects/:project-id/user/:name
+   path-params = {:project-id 5, :name 'Goerge'}"
+  [path path-params]
+  (str base-url
+       (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
+
+(defn- build-request [client method path params]
   {:method method,
-   :url (str base-url path)
+   :url path
    :form-params params,
    :user-agent user-agent,
    :headers {:Notion-Version notion-version},
@@ -33,46 +31,31 @@
    :accept :json,
    :cookie-policy :none})
 
-(defn- send-request
-  ([method path client params]
-    (let [request (build-request method path client params)
+(defn send-request
+  ([client method route params]
+    (let [request (build-request client method route params)
           response (client/request request)]
       (if (= 200 (:status response))
         (json/read-str (:body response) :key-fn keyword))))
-  ([method path client]
-    (send-request method path client {})))
+  ([client method route]
+    (send-request client method route {})))
 
 (defn fetch
   "Fetch the given model. If an 'id' is given, fetches only one record.
    Otherwise, everthing is fetched."
-  ([client model-keyword]
-    (:results (send-request :get (get-route model-keyword) client)))
-  ([client model-keyword id]
-    (let [path (get-route model-keyword id)]
-      (send-request :get path client))))
-
-; TODO Check if create! and update! are really working and if the params cannot
-; be made better
-(defn create!
-  "Creates a new object."
-  ([client model-keyword object]
-    (let [params (dissoc object :id)
-          path (get-route model-keyword)]
-      (send-request :put path client params))))
-
-(defn update!
-  "Updates the give object"
-  ([client model-keyword object]
-    (let [params (dissoc object :id)
-          path (get-route model-keyword)]
-      (send-request :put path client params))))
+  ([client path]
+    (:results (send-request client :get path)))
+  ([client path id]
+    (let [route (build-route path {:id id})]
+      (send-request client :get route))))
 
 (defn delete!
   "Permanently deletes the given model with the given id"
-  [client model-keyword id]
-  (let [path (get-route model-keyword id)]
-    (send-request :delete path client)))
+  [client path id]
+  (let [route (build-route path {:id id})]
+    (send-request client :delete route)))
 
+; Might need to be moved elsewhere
 (defn search
   "Searches pages and databases (including childrens) titles that matches
    the given query.
@@ -95,4 +78,4 @@
     https://developers.notion.com/reference/post-search"
   ([client query params]
     (let [params (merge {:query query} params)]
-      (send-request :post "/search" client params))))
+      (send-request client :post "/search" params))))

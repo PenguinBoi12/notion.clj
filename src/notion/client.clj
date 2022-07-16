@@ -30,8 +30,11 @@
 (defn page [client id]
   (build-page (api/fetch client :page id)))
 
+; The smart thing to do would be to put a fetch function that does this in the
+; block.clj interaction file and then call it here. That way, client is not
+; thightly bound to the logic of each.
 (defn block [client id]
-  (build-block (api/fetch client :block id)))
+  (build-block (api/fetch client "/blocks/:id" id)))
 
 (defn parent [client model]
   (let [id (:parent-id model),
