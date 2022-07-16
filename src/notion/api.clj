@@ -15,13 +15,14 @@
   interpolated into the path string.
 
   Ex.
-   path        = projects/:project-id/user/:name
+   path        = 'projects/:project-id/user/:name'
    path-params = {:project-id 5, :name 'Goerge'}"
   [path path-params]
   (str base-url
        (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
 
 (defn- build-request [client method path params]
+  "Builds a request to the API"
   {:method method,
    :url path
    :form-params params,
@@ -33,6 +34,7 @@
    :cookie-policy :none})
 
 (defn send-request
+  "Sends a request and parse the response. Returns nil if status is not 200"
   ([client method route params]
     (let [request (build-request client method route params)
           response (client/request request)]
@@ -55,9 +57,9 @@
   [client path body]
   (send-request client :get path body))
 
-; (def put!
-;   "Updates the object with the given with the given id"
-;   [client path id body])
+(defn put!
+  "Updates the object with the given with the given id"
+  [client path id body])
 
 (defn delete!
   "Permanently deletes the object with the given with the given id"
