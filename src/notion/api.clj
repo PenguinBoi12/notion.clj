@@ -1,4 +1,5 @@
 (ns notion.api
+  (:refer-clojure :exclude [get])
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
             [clojure.string :as string]))
@@ -40,7 +41,7 @@
   ([client method route]
     (send-request client method route {})))
 
-(defn fetch
+(defn get
   "Fetch the given model. If an 'id' is given, fetches only one record.
    Otherwise, everthing is fetched."
   ([client path]
@@ -49,33 +50,17 @@
     (let [route (build-route path {:id id})]
       (send-request client :get route))))
 
+(defn post!
+  "Create a new object"
+  [client path body]
+  (send-request client :get path body))
+
+; (def put!
+;   "Updates the object with the given with the given id"
+;   [client path id body])
+
 (defn delete!
-  "Permanently deletes the given model with the given id"
+  "Permanently deletes the object with the given with the given id"
   [client path id]
   (let [route (build-route path {:id id})]
     (send-request client :delete route)))
-
-; Might need to be moved elsewhere
-(defn search
-  "Searches pages and databases (including childrens) titles that matches
-   the given query.
-
-   params is a map that can includes those keys:
-    :sort - Sorts the result by the provided criteria. Only one at the time
-            is currently allowed.
-      :direction - Direction to sort. Must be :ascending or :descending
-      :timestamp - Name of the timestamp to sort. Possible value is :last_edited_time
-
-    :filter - Filters the results based on the provided criteria. filter must
-              be a map that include :value and/or :property
-      :value - Value of the property. Can be :database or :page. At the moment,
-               only :object is available (see notion's doc)
-      :property - Name of the property. Can be :database or :page. At the moment
-                  only :object is available (see notion's doc)
-    :start_cursor - Pagination starting point or the result.
-    :page_size - Number or result per page. Maximum is 100.
-
-    https://developers.notion.com/reference/post-search"
-  ([client query params]
-    (let [params (merge {:query query} params)]
-      (send-request client :post "/search" params))))
