@@ -43,55 +43,20 @@
   ([client query]
     (search client query {})))
 
-(defn user
-  "Return the user with the given id"
-  [client id]
-  (user/find client id))
-
-(defn users
-  "Returns all users"
-  [client]
-  (user/all client))
-
-(defn database
-  "Returns the database with the given id"
-  [client id]
-  (database/find id))
-
-(defn block
-  "Returns the block with the given id"
-  [client id]
-  (block/find client id))
-
-(defn blocks
-  "Returns all blocks"
-  [client]
-  (block/all client))
-
-(defn page
-  "Returns the page with the given id"
-  [client id]
-  (page/find client id))
-
-(defn pages
-  "Returns all pages"
-  [client id]
-  (page/all client))
-
 (defn parent
   "Returns the parent of the given object"
   [client object]
   (let [id (:parent-id object),
         type (:parent-type object)
-        func (type {:page page, :database database})]
+        func (type {:page page/find, :database database/find})]
     (func client id)))
 
 (defn created-by
   "Returns the user who created the object"
   [client object]
-  (user client (:created-by-id object)))
+  (user/find client (:created-by-id object)))
 
 (defn last-edited-by
   "Returns the last user who edited the object"
   [client object]
-  (user client (:last-edited-by-id object)))
+  (user/find client (:last-edited-by-id object)))
