@@ -1,6 +1,6 @@
-(ns notion.block
+(ns notion.api.block
   (:refer-clojure :exclude [find])
-  (:require [notion.api :as api]
+  (:require [notion.api.core :as api]
             [notion.types.block :refer [build-block]]))
 
 (defonce ^:private prefix "/blocks/")

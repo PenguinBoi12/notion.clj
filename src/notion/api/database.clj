@@ -1,6 +1,6 @@
-(ns notion.database
+(ns notion.api.database
   (:refer-clojure :exclude [find])
-  (:require [notion.api :as api]
+  (:require [notion.api.core :as api]
             [notion.types.database :refer [build-database]]))
 
 
@@ -9,7 +9,7 @@
 (defn all
   "Returns all accessible databases"
   [client]
-  (map build-database (api/get client prefix)))
+  (map build-database (api/search client "" {:filter {:value :database}})))
 
 (defn find
   "Finds and return the database with the given id"
@@ -25,3 +25,11 @@
   [client database]
   (let [database_id (:id database)]
     (api/delete! client prefix database_id)))
+
+(defn pages
+  "Returns all pages from the database
+
+  https://developers.notion.com/reference/post-database-query"
+  [client database]
+  (let [database_id (:id database)]
+    (api/post! (str prefix ":id/query") database_id)))

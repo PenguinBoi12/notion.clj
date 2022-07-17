@@ -1,6 +1,6 @@
-(ns notion.user
+(ns notion.api.user
   (:refer-clojure :exclude [find])
-  (:require [notion.api :as api]
+  (:require [notion.api.core :as api]
             [notion.types.user :refer [build-user]]))
 
 (defonce ^:private prefix "/users/")

@@ -1,4 +1,4 @@
-(ns notion.api
+(ns notion.api.core
   (:refer-clojure :exclude [get])
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
@@ -8,7 +8,7 @@
 (defonce ^:private user-agent (str "notion.clj - Notion v" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
 
-(defn build-route
+(defn- build-route
   "Builds the complete route needed to make a request.
 
   path-params is a map containing the keys and the values that needs to be
@@ -33,7 +33,7 @@
    :accept :json,
    :cookie-policy :none})
 
-(defn send-request
+(defn- send-request
   "Sends a request and parse the response. Returns nil if status is not 200"
   ([client method route params]
     (let [request (build-request client method route params)
@@ -66,3 +66,29 @@
   [client path id]
   (let [route (build-route path {:id id})]
     (send-request client :delete route)))
+
+(defn search
+  "Searches pages and databases (including childrens) titles that matches
+   the given query.
+
+   options is a map that can includes those keys:
+    :sort - Sorts the result by the provided criteria. Only one at the time
+            is currently allowed.
+      :direction - Direction to sort. Must be :ascending or :descending
+      :timestamp - Name of the timestamp to sort. Possible value is :last_edited_time
+
+    :filter - Filters the results based on the provided criteria. filter must
+              be a map that include :value and/or :property
+      :value - Value of the property. Can be :database or :page. At the moment,
+               only :object is available (see notion's doc)
+      :property - Name of the property. Can be :database or :page. At the moment
+                  only :object is available (see notion's doc)
+    :start_cursor - Pagination starting point or the result.
+    :page_size - Number or result per page. Maximum is 100.
+
+    https://developers.notion.com/reference/post-search"
+  ([client query options]
+    (let [params (merge {:query query} options)]
+      (get client "/search" params)))
+  ([client query]
+    (search client query {})))

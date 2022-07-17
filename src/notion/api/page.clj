@@ -1,15 +1,17 @@
-(ns notion.page
+(ns notion.api.page
   (:refer-clojure :exclude [find])
-  (:require [notion.api :as api]
+  (:require [notion.api.core :as api]
             [notion.types.page :refer [build-page]]
-            [notion.block :as block]))
+            [notion.api.block :as block]
+            [notion.api.database :as database]))
 
 (defonce ^:private prefix "/pages/")
 
 (defn all
   "Returns all accessible pages (blocks)"
   [client]
-  (map build-page (api/get client "/blocks/")))
+  (let [databases (database/all)]
+    (map #(map build-page (api/get client "/blocks/")) databases)))
 
 (defn find
   "Finds and return the page with the given id"

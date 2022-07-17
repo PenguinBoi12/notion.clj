@@ -12,5 +12,5 @@
     (catch IOException e
       (throw (ex-info "Can't load the configuration!" {:file filename})))))
 
-(defn load-default-config []
-  (load-config "resources/config.edn"))
+(def load-default-config
+  (partial load-config "resources/config.edn"))
