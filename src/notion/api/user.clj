@@ -23,3 +23,13 @@
   [client user]
   (let [user_id (:id user)]
     (api/delete! client prefix user_id)))
+
+(defn created-by
+  "Returns the user who created the object"
+  [client object]
+  (find client (:created-by-id object)))
+
+(defn last-edited-by
+  "Returns the last user who edited the object"
+  [client object]
+  (find client (:last-edited-by-id object)))
