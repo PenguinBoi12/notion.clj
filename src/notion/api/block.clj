@@ -1,6 +1,7 @@
 (ns notion.api.block
   (:refer-clojure :exclude [find])
   (:require [notion.api.core :as api]
+            [notion.api.database :as database]
             [notion.types.block :refer [build-block]]))
 
 (defonce ^:private prefix "/blocks/")
@@ -23,3 +24,11 @@
   [client block]
   (let [block_id (:id block)]
     (api/delete! client prefix block_id)))
+
+(defn parent
+  "Returns the parent of the given object"
+  [client object]
+  (let [id (:parent-id object),
+        type (:parent-type object)
+        func (type {:page find, :database database/find})]
+    (func client id)))
