@@ -86,9 +86,12 @@
     :start_cursor - Pagination starting point or the result.
     :page_size - Number or result per page. Maximum is 100.
 
-    https://developers.notion.com/reference/post-search"
+    Currently limited to :object which search both :page and :database
+     https://developers.notion.com/reference/post-search"
   ([client query options]
+  	(println "Warning: Due to API limitation, searchs are performed on :object\n(https://developers.notion.com/reference/post-search)")
+  	
     (let [params (merge {:query query} options)]
-      (get client "/search" params)))
+      (post! client "/search" params)))
   ([client query]
     (search client query {})))
