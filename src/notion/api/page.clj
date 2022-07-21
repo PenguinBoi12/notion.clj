@@ -28,3 +28,16 @@
   "Delete the page with the given id"
   [client page]
   (block/delete! client page))
+
+(defn search 
+	"Searches page's titles that matches the given query.
+
+	 See api/search for the list of options. (Note that filter will be ignored) 
+
+	 Not completly available due to Notion's API limitation 
+	 (https://developers.notion.com/reference/post-search)"
+	([client query options]
+		(let [options (merge options {:filter :page, :property :page})]
+  		(map build-page (api/search client query options))))
+  ([client query]
+  	(search client query {})))
