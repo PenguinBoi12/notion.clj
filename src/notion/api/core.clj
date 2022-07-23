@@ -11,12 +11,11 @@
 (defn- build-route
   "Builds the complete route needed to make a request.
 
-  path-params is a map containing the keys and the values that needs to be
-  interpolated into the path string.
+   path-params is a map containing the keys and the values that needs to be
+   	interpolated into the path string.
 
-  Ex.
-   path        = 'projects/:project-id/user/:name'
-   path-params = {:project-id 5, :name 'Goerge'}"
+   Usage.
+   	build-route('projects/:project-id/user/:name', {:project-id 5, :name 'Goerge'})"
   [path path-params]
   (str base-url
        (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
@@ -34,9 +33,19 @@
    :cookie-policy :none})
 
 (defn- send-request
-  "Sends a request and parse the response. Returns nil if status is not 200"
-  ([client method route params]
-    (let [request (build-request client method route params)
+  "Sends a request to the API and parse the response.
+  	(Returns nil if the response code is not 200)
+
+   client 
+   	Client type instance that contains the client's informations.
+   method 
+   	Key that defines the http method used for the request.
+   route 
+   	String containing the url of the request
+   params
+   	Map containing the request's payload"
+  ([client method route payload]
+    (let [request (build-request client method route payload)
           response (client/request request)]
       (if (= 200 (:status response))
         (json/read-str (:body response) :key-fn keyword))))
@@ -44,35 +53,34 @@
     (send-request client method route {})))
 
 (defn get
-  "Fetch the given model. If an 'id' is given, fetches only one record.
-   Otherwise, everthing is fetched."
+  "Fetches all the resources"
   ([client path]
     (:results (send-request client :get path)))
+  "Fetches the resource with the given id"
   ([client path id]
     (let [route (build-route path {:id id})]
       (send-request client :get route))))
 
 (defn post!
-  "Create a new object"
+  "Creates a new resource"
   [client route body]
   (send-request client :post route body))
 
 (defn put!
-  "Updates the object with the given with the given id"
+  "Updates the resource with the given id"
   [client route id body]
   (send-request client :put route body))
 
 (defn delete!
-  "Permanently deletes the object with the given with the given id"
+  "Deletes the resource with the given id"
   [client path id]
   (let [route (build-route path {:id id})]
     (send-request client :delete route)))
 
 (defn search
-  "Searches pages and databases (including childrens) titles that matches
-   the given query.
+  "Search and returns page's and/or database's titles that matches the given query.
 
-   options is a map that can includes those keys:
+   options: Map that can includes those keys:
     :sort - Sorts the result by the provided criteria. Only one at the time
             is currently allowed.
       :direction - Direction to sort. Must be :ascending or :descending
