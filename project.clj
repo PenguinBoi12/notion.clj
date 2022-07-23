@@ -12,7 +12,8 @@
                  [cheshire "5.11.0"]
                  [integrant/repl "0.3.2"]
                  [nrepl/nrepl "0.8.3"]
-                 [slingshot "0.12.2"]]
+                 [slingshot "0.12.2"]
+                 [com.taoensso/timbre "5.2.1"]]
   :main ^:skip-aot notion.core
   :target-path "target/%s"
   :source-paths ["src"]
