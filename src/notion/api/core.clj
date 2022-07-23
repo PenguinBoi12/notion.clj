@@ -54,12 +54,13 @@
 
 (defn post!
   "Create a new object"
-  [client path body]
-  (send-request client :get path body))
+  [client route body]
+  (send-request client :post route body))
 
 (defn put!
   "Updates the object with the given with the given id"
-  [client path id body])
+  [client route id body]
+  (send-request client :put route body))
 
 (defn delete!
   "Permanently deletes the object with the given with the given id"
