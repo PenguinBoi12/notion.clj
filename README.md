@@ -26,13 +26,15 @@ For now, the library is only available through github or locally with [Clojure d
 # Example(s)
 ### Retrive a user
 ```clojure
-(ns my-notion-project.core
-  (:require notion.client :as client))
+(ns my-project.core
+  (:require 
+    [notion.client :as client]
+    [notion.api.user :as user]))
 
 (defn -main [& args]
   (let [client (client/init!)
-        user (client/user client "user-id")]
-    (println user))))
+        user (user/fetch client "user id")]
+    (println user)))
 ```
 
 # Contributing
