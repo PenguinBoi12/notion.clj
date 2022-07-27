@@ -7,12 +7,6 @@
 
 (defonce ^:private prefix "/pages/")
 
-(defn all
-  "Returns all accessible pages (blocks)"
-  [client]
-  (let [databases (database/all)]
-    (map #(map build-page (api/get client "/blocks/")) databases)))
-
 (defn find
   "Finds and return the page with the given id"
   [client id]
@@ -24,7 +18,7 @@
 (defn save! [client page]
   (block/save! client page))
 
-(defn delete!
+(defn archive!
   "Delete the page with the given id"
   [client page]
   (block/delete! client page))

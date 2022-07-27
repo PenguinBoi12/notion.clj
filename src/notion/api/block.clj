@@ -6,10 +6,6 @@
 
 (defonce ^:private prefix "/blocks/")
 
-(defn all
-  "Returns all accessible blocks"
-  [client]
-  (map build-block (api/get client prefix)))
 
 (defn find [client id]
   "Finds and return the block with the given id"
@@ -26,9 +22,15 @@
     (api/delete! client prefix block_id)))
 
 (defn parent
-  "Returns the parent of the given object"
-  [client object]
-  (let [id (:parent-id object),
-        type (:parent-type object)
-        func (type {:page find, :database database/find})]
+  "Returns the parent of the block"
+  [client block]
+  (let [id (:parent-id block),
+        type (:parent-type block)
+        func (type {:page page/find, :database database/find})]
     (func client id)))
+
+(defn childrens
+	"Returns the block's childrens"
+	[client block]
+	(let [block-id (:id block)]
+		(map build-block (api/get (str prefix ":block-id/children") block-id))))
