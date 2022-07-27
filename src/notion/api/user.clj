@@ -6,7 +6,7 @@
 (defonce ^:private prefix "/users/")
 
 (defn all
-  "Returns all accessible users"
+  "Returns all users"
   [client]
   (map build-user (api/get client prefix)))
 
@@ -20,11 +20,11 @@
 	(build-user (str prefix "/me")))
 
 (defn created-by
-  "Returns the user who created the object"
-  [client object]
-  (find client (:created-by-id object)))
+  "Returns the user who created the resource"
+  [client resource]
+  (find client (:created-by-id resource)))
 
 (defn last-edited-by
-  "Returns the last user who edited the object"
-  [client object]
-  (find client (:last-edited-by-id object)))
+  "Returns the last user who edited the resource"
+  [client resource]
+  (find client (:last-edited-by-id resource)))
