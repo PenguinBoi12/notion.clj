@@ -19,18 +19,26 @@
   "Delete the block with the given id"
   [client block]
   (let [block_id (:id block)]
-    (api/delete! client prefix block_id)))
+    (api/delete client prefix block_id)))
 
 (defn parent
   "Returns the parent of the block"
   [client block]
   (let [id (:parent-id block),
         type (:parent-type block)
-        func (type {:page page/find, :database database/find})]
+        func (type {:page find, :database database/find})]
     (func client id)))
 
-(defn childrens
+(defn children
 	"Returns the block's childrens"
 	[client block]
-	(let [block-id (:id block)]
-		(map build-block (api/get (str prefix ":block-id/children") block-id))))
+	(if (:has_children block)
+		(let [block-id (:id block)]
+			(map build-block (api/get (str prefix ":block-id/children") block-id)))))
+
+(defn add-child!
+	"Add a child to the block's childrens"
+	[client block]
+	(if (:has_children block)
+		(let [block-id (:id block)]
+			(build-block (api/patch (str prefix ":block-id/children") block-id)))))
