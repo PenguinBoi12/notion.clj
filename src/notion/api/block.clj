@@ -24,7 +24,7 @@
 (defn parent
   "Returns the parent of the block"
   [client block]
-  (let [id (:parent-id block),
+  (let [id 	 (:parent-id block),
         type (:parent-type block)
         func (type {:page find, :database database/find})]
     (func client id)))
