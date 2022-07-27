@@ -14,12 +14,6 @@
   "Finds and return the user with the given id"
   (build-user (api/get client (str prefix ":id") id)))
 
-(defn delete!
-  "Delete the user with the given id"
-  [client user]
-  (let [user_id (:id user)]
-    (api/delete! client prefix user_id)))
-
 (defn me
 	"Retrieve's the bot's User"
 	[client]
