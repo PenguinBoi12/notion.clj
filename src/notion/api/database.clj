@@ -23,7 +23,16 @@
 (defn pages
   "Returns all pages from the database
 
-  https://developers.notion.com/reference/post-database-query"
-  [client database]
-  (let [database_id (:id database)]
-    (api/post (str prefix ":id/query") database_id)))
+   params: Map that can includes those keys
+   	:filter - Limits pages based on the given filter conditions 
+   	:sorts - Orders the results based on the sort criteria 
+   	:start_cursor - Set the starting pagination's cursor
+   	:page_size - Number of elements in each pages
+   	
+ 	 For mor infomations see https://developers.notion.com/reference/post-database-query
+  "
+  ([client database params]
+  	(let [database_id (:id database)]
+    	(api/post (str prefix ":id/query") database_id)))
+  ([client database]
+  	(pages client database {})))
