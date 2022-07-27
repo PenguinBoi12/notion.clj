@@ -4,7 +4,7 @@
             [clojure.data.json :as json]
             [clojure.string :as string]))
 
-(defonce ^:private notion-version "2022-02-22")
+(defonce ^:private notion-version "2022-06-28")
 (defonce ^:private user-agent (str "notion.clj - Notion v" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
 
@@ -16,9 +16,10 @@
 
    Usage.
    	build-route('projects/:project-id/user/:name', {:project-id 5, :name 'Goerge'})"
-  [path path-params]
-  (str base-url
-       (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
+  ([path path-params]
+  	(str base-url (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
+  ([path]
+  	(build-route path {})))
 
 (defn- build-request [client method path params]
   "Builds a request to the API"
@@ -56,22 +57,26 @@
   "Fetches all the resources"
   ([client path]
     (:results (send-request client :get path)))
-  "Fetches the resource with the given id"
   ([client path id]
     (let [route (build-route path {:id id})]
       (send-request client :get route))))
 
-(defn post!
+(defn post
   "Creates a new resource"
-  [client route body]
-  (send-request client :post route body))
+  [client path body]
+  (send-request client :post (build-route path) body))
 
-(defn put!
+(defn put
+  "Replaces the resource with the given id"
+  [client path id body]
+  (send-request client :put (build-route path) body))
+
+(defn patch
   "Updates the resource with the given id"
-  [client route id body]
-  (send-request client :put route body))
+  [client path id body]
+  (send-request client :patch (build-route path) body))
 
-(defn delete!
+(defn delete
   "Deletes the resource with the given id"
   [client path id]
   (let [route (build-route path {:id id})]
@@ -101,6 +106,6 @@
   	(println "Warning: Due to API limitation, searchs are performed on :object\n(https://developers.notion.com/reference/post-search)")
   	
     (let [params (merge {:query query} options)]
-      (post! client "/search" params)))
+      (post client "/search" params)))
   ([client query]
     (search client query {})))

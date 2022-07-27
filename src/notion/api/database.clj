@@ -3,7 +3,6 @@
   (:require [notion.api.core :as api]
             [notion.types.database :refer [build-database]]))
 
-
 (defonce ^:private prefix "/databases/")
 
 (defn find
@@ -19,7 +18,7 @@
   "Delete the database with the given id"
   [client database]
   (let [database_id (:id database)]
-    (api/delete! client prefix database_id)))
+    (api/delete client prefix database_id)))
 
 (defn pages
   "Returns all pages from the database
@@ -27,4 +26,4 @@
   https://developers.notion.com/reference/post-database-query"
   [client database]
   (let [database_id (:id database)]
-    (api/post! (str prefix ":id/query") database_id)))
+    (api/post (str prefix ":id/query") database_id)))
