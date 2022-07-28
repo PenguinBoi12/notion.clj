@@ -4,12 +4,9 @@
             [notion.api.database :as database]
             [notion.types.block :refer [build-block]]))
 
-(defonce ^:private prefix "/blocks/")
-
-
 (defn find [client id]
   "Finds and return the block with the given id"
-  (build-block (api/get client (str prefix ":id") id)))
+  (build-block (api/get client "/blocks/:id" id)))
 
 (defn create! [client block])
 
@@ -19,7 +16,7 @@
   "Delete the block with the given id"
   [client block]
   (let [block_id (:id block)]
-    (api/delete client prefix block_id)))
+    (api/delete client "/blocks" block_id)))
 
 (defn parent
   "Returns the parent of the block"
@@ -33,12 +30,12 @@
 	"Returns the block's childrens"
 	[client block]
 	(if (:has_children block)
-		(let [block-id (:id block)]
-			(map build-block (api/get (str prefix ":block-id/children") block-id)))))
+		(let [id (:id block)]
+			(map build-block (api/get "/blocks/:id/children") id))))
 
 (defn add-child!
 	"Add a child to the block's childrens"
 	[client block]
 	(if (:has_children block)
-		(let [block-id (:id block)]
-			(build-block (api/patch (str prefix ":block-id/children") block-id)))))
+		(let [id (:id block)]
+			(build-block (api/patch "/blocks/:id/children" id)))))

@@ -3,21 +3,19 @@
   (:require [notion.api.core :as api]
             [notion.types.user :refer [build-user]]))
 
-(defonce ^:private prefix "/users/")
-
 (defn all
   "Returns all users"
   [client]
-  (map build-user (api/get client prefix)))
+  (map build-user (api/get client "/users/")))
 
 (defn find [client id]
   "Finds and return the user with the given id"
-  (build-user (api/get client (str prefix ":id") id)))
+  (build-user (api/get client "/users/:id" id)))
 
 (defn me
 	"Retrieve's the bot's User"
 	[client]
-	(build-user (str prefix "/me")))
+	(build-user "/users/me"))
 
 (defn created-by
   "Returns the user who created the resource"

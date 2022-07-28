@@ -5,12 +5,10 @@
             [notion.api.block :as block]
             [notion.api.database :as database]))
 
-(defonce ^:private prefix "/pages/")
-
 (defn find
   "Finds and return the page with the given id"
   [client id]
-  (build-page (api/get client (str prefix ":id") id)))
+  (build-page (api/get client "/pages/:id" id)))
 
 (defn create! [client page]
   (block/create! client page))
@@ -19,7 +17,7 @@
   (block/save! client page))
 
 (defn archive!
-  "Delete the page with the given id"
+  "Archives (deletes) the page with the given id"
   [client page]
   (block/delete! client page))
 
@@ -31,7 +29,7 @@
 	 Not completly available due to Notion's API limitation 
 	 (https://developers.notion.com/reference/post-search)"
 	([client query options]
-		(let [options (merge options {:filter :page, :property :page})]
+		(let [options (merge options {:filter :page, :property :object})]
   		(map build-page (api/search client query options))))
   ([client query]
   	(search client query {})))
