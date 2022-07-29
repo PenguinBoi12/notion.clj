@@ -5,7 +5,7 @@
 
 (defn find
   "Finds and return the database with the given id"
-  [client id]/
+  [client id]
   (build-database (api/get client  "/databases/:id" id)))
 
 (defn create! [client database])
@@ -27,8 +27,7 @@
    	:start_cursor - Set the starting pagination's cursor
    	:page_size - Number of elements in each pages
    	
- 	 For mor infomations see https://developers.notion.com/reference/post-database-query
-  "
+ 	 For mor infomations see https://developers.notion.com/reference/post-database-query"
   ([client database params]
   	(let [database-id (:id database)]
     	(api/post "/databases/:id/query" database-id)))

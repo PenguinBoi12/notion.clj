@@ -4,8 +4,9 @@
             [notion.api.database :as database]
             [notion.types.block :refer [build-block]]))
 
-(defn find [client id]
+(defn find 
   "Finds and return the block with the given id"
+	[client id]
   (build-block (api/get client "/blocks/:id" id)))
 
 (defn create! [client block])
