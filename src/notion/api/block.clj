@@ -1,10 +1,7 @@
 (ns notion.api.block
   (:refer-clojure :exclude [find])
   (:require [notion.api.core :as api]
-            [notion.api.page :as page]
-            [notion.api.database :as database]
-            [notion.types.resource :refer [Resource]]
-            [notion.types.block :refer [Block build-block]]))
+            [notion.types.block :refer [build-block]]))
 
 (defn find 
   "Finds and return the block with the given id"
@@ -19,14 +16,6 @@
   "Delete the block with the given id"
   [client block]
   (api/delete client "/blocks" (:id block)))
-
-(defn parent
-  "Returns the parent of the block"
-  [client block]
-  (let [id 	 (:parent-id block),
-        type (:parent-type block)
-        func (type {:page page/find, :database database/find})]
-    (func client id)))
 
 (defn children
 	"Returns the block's childrens"

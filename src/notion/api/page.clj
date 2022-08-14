@@ -2,19 +2,16 @@
   (:refer-clojure :exclude [find])
   (:require [notion.api.core :as api]
             [notion.types.page :refer [build-page]]
-            [notion.api.block :as block]
-            [notion.api.database :as database]))
+            [notion.api.block :as block]))
 
 (defn find
   "Finds and return the page with the given id"
   [client id]
   (build-page (api/get client "/pages/:id" id)))
 
-(defn create! [client page]
-  (block/create! client page))
+(defn create! [client page])
 
-(defn save! [client page]
-  (block/save! client page))
+(defn save! [client page])
 
 (defn archive!
   "Archives (deletes) the page with the given id"
