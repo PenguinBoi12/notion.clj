@@ -8,9 +8,11 @@
   [client id]
   (build-database (api/get client  "/databases/:id" id)))
 
-(defn create! [client database])
+(defn create! [client database]
+	(api/post "/databases/:id" database))
 
-(defn save! [client database])
+(defn save! [client database]
+	(api/patch "/databases/:id" database))
 
 (defn delete!
   "Delete the database with the given id"

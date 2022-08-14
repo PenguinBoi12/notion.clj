@@ -8,14 +8,13 @@
 	[client id]
   (build-block (api/get client "/blocks/:id" id)))
 
-(defn create! [client block])
-
-(defn save! [client block])
+(defn save! [client block]
+	(api/patch "/blocks/:id" block))
 
 (defn delete!
   "Delete the block with the given id"
   [client block]
-  (api/delete client "/blocks" (:id block)))
+  (api/delete client "/blocks" block))
 
 (defn children
 	"Returns the block's childrens"

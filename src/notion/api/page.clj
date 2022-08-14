@@ -9,9 +9,11 @@
   [client id]
   (build-page (api/get client "/pages/:id" id)))
 
-(defn create! [client page])
+(defn create! [client page]
+	(api/post "/pages/:id" page))
 
-(defn save! [client page])
+(defn save! [client page]
+	(api/patch "/pages/:id" page))
 
 (defn archive!
   "Archives (deletes) the page with the given id"
