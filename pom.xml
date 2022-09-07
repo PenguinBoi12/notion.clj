@@ -3,7 +3,7 @@
   <groupId>notion.clj</groupId>
   <artifactId>notion.clj</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>notion.clj</name>
   <description>A notion api wrapper in Clojure</description>
   <url>https://github.com/penguinboi/notion.clj</url>
@@ -17,7 +17,7 @@
     <url>https://github.com/PenguinBoi12/notion.clj</url>
     <connection>scm:git:git://github.com/PenguinBoi12/notion.clj.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/PenguinBoi12/notion.clj.git</developerConnection>
-    <tag>489f2e729e796936e67c0cfd2ea1a2cc600c079e</tag>
+    <tag>209ee185501306e281225ac18be23e7c48cfc005</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -106,6 +106,21 @@
       <groupId>nrepl</groupId>
       <artifactId>nrepl</artifactId>
       <version>0.8.3</version>
+    </dependency>
+    <dependency>
+      <groupId>slingshot</groupId>
+      <artifactId>slingshot</artifactId>
+      <version>0.12.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.taoensso</groupId>
+      <artifactId>timbre</artifactId>
+      <version>5.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>camel-snake-kebab</groupId>
+      <artifactId>camel-snake-kebab</artifactId>
+      <version>0.4.3</version>
     </dependency>
   </dependencies>
 </project>

@@ -2,11 +2,15 @@
   (:refer-clojure :exclude [get])
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [camel-snake-kebab.core :refer [->kebab-case-keyword]]))
 
 (defonce ^:private notion-version "2022-06-28")
 (defonce ^:private user-agent (str "notion.clj - Notion v" notion-version))
 (defonce ^:private base-url "https://api.notion.com/v1")
+
+(defmethod client/coerce-response-body :json-kebab-keys [req resp]
+	(client/coerce-json-body req resp (memoize ->kebab-case-keyword) false))
 
 (defn- build-route
   "Builds the complete route needed to make a request.
@@ -31,7 +35,8 @@
    :oauth-token (.token client),
    :content-type :json,
    :accept :json,
-   :cookie-policy :none})
+   :cookie-policy :none
+   :as :json-kebab-keys})
 
 (defn- send-request
   "Sends a request to the API and parse the response.
@@ -49,7 +54,7 @@
     (let [request (build-request client method route payload)
           response (client/request request)]
       (if (= 200 (:status response))
-        (json/read-str (:body response) :key-fn keyword))))
+        (:body response))))
   ([client method route]
     (send-request client method route {})))
 

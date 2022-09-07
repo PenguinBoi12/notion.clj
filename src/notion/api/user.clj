@@ -3,6 +3,9 @@
   (:require [notion.api.core :as api]
             [notion.types.user :refer [build-user]]))
 
+(defn bot? [user] 
+	(= (:type "bot") "bot"))
+
 (defn all
   "Returns all users"
   [client]
