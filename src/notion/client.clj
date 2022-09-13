@@ -1,7 +1,12 @@
 (ns notion.client
-  (:require
-    [notion.types.client :refer [->Client]]
-    [notion.config :refer [load-default-config]]))
+  (:require [notion.config :refer [load-default-config]]))
+
+(defprotocol ClientProtocol
+  (token [this]))
+
+(deftype Client [config]
+  ClientProtocol
+  (token [_] (:token config)))
 
 (defn init!
   "Loads the client configuration and returns a client protocol.
