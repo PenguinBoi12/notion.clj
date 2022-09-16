@@ -9,10 +9,10 @@
   (api/get client "/pages/:id" id))
 
 (defn create! [client page]
-	(api/post "/pages/:id" page))
+  (api/post "/pages/:id" page))
 
 (defn save! [client page]
-	(api/patch "/pages/:id" page))
+  (api/patch "/pages/:id" page))
 
 (defn archive!
   "Archives (deletes) the page with the given id"
@@ -20,14 +20,14 @@
   (block/delete! client page))
 
 (defn search 
-	"Searches page's titles that matches the given query.
+  "Searches page's titles that matches the given query.
 
-	 See api/search for the list of options. (Note that filter will be ignored) 
+   See api/search for the list of options. (Note that filter will be ignored) 
 
-	 Not completly available due to Notion's API limitation 
-	 (https://developers.notion.com/reference/post-search)"
-	([client query options]
-		(let [options (merge options {:filter :page, :property :object})]
-  		(map build-page (api/search client query options))))
+   Not completly available due to Notion's API limitation 
+   (https://developers.notion.com/reference/post-search)"
+  ([client query options]
+    (let [options (merge options {:filter :page, :property :object})]
+      (map build-page (api/search client query options))))
   ([client query]
-  	(search client query {})))
+    (search client query {})))

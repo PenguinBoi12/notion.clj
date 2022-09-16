@@ -10,20 +10,20 @@
 (defonce ^:private base-url "https://api.notion.com/v1")
 
 (defmethod client/coerce-response-body :json-kebab-keys [req resp]
-	(client/coerce-json-body req resp (memoize ->kebab-case-keyword) false))
+  (client/coerce-json-body req resp (memoize ->kebab-case-keyword) false))
 
 (defn- build-route
   "Builds the complete route needed to make a request.
 
    path-params is a map containing the keys and the values that needs to be
-   	interpolated into the path string.
+    interpolated into the path string.
 
    Usage.
-   	build-route('projects/:project-id/user/:name', {:project-id 5, :name 'Goerge'})"
+    build-route('projects/:project-id/user/:name', {:project-id 5, :name 'Goerge'})"
   ([path path-params]
-  	(str base-url (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
+    (str base-url (reduce-kv #(string/replace %1 (str %2) (str %3)) path path-params)))
   ([path]
-  	(build-route path {})))
+    (build-route path {})))
 
 (defn- build-request [client method path params]
   "Builds a request to the API"
@@ -40,16 +40,16 @@
 
 (defn- send-request
   "Sends a request to the API and parse the response.
-  	(Returns nil if the response code is not 200)
+    (Returns nil if the response code is not 200)
 
    client 
-   	Client type instance that contains the client's informations.
+    Client type instance that contains the client's informations.
    method 
-   	Key that defines the http method used for the request.
+    Key that defines the http method used for the request.
    route 
-   	String containing the url of the request
+    String containing the url of the request
    params
-   	Map containing the request's payload"
+    Map containing the request's payload"
   ([client method route payload]
     (let [request (build-request client method route payload)
           response (client/request request)]
@@ -108,8 +108,8 @@
     Currently limited to :object which search both :page and :database
      https://developers.notion.com/reference/post-search"
   ([client query options]
-  	(println "Warning: Due to API limitation, searchs are performed on :object\n(https://developers.notion.com/reference/post-search)")
-  	
+    (println "Warning: Due to API limitation, searchs are performed on :object\n(https://developers.notion.com/reference/post-search)")
+    
     (let [params (merge {:query query} options)]
       (post client "/search" params)))
   ([client query]

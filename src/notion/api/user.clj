@@ -4,7 +4,7 @@
             [notion.types.user :refer [build-user]]))
 
 (defn bot? [user] 
-	(= (:type "bot") "bot"))
+  (= (:type "bot") "bot"))
 
 (defn all
   "Returns all users"
@@ -16,9 +16,9 @@
   (build-user (api/get client "/users/:id" id)))
 
 (defn me
-	"Retrieve's the bot's User"
-	[client]
-	(build-user "/users/me"))
+  "Retrieve's the bot's User"
+  [client]
+  (build-user "/users/me"))
 
 (defn created-by
   "Returns the user who created the resource"
