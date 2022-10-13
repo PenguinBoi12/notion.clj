@@ -41,3 +41,4 @@ package-lock.json
 .lein-env
 .env
 resources/config.edn
+.fleet

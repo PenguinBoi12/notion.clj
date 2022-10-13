@@ -1,12 +1,11 @@
 (ns notion.api.database
   (:refer-clojure :exclude [find])
-  (:require [notion.api.core :as api]
-            [notion.types.database :refer [build-database]]))
+  (:require [notion.api.core :as api]))
 
 (defn find
   "Finds and return the database with the given id"
   [client id]
-  (build-database (api/get client  "/databases/:id" id)))
+  (api/get client  "/databases/:id" id))
 
 (defn create! [client database]
   (api/post "/databases/:id" database))
@@ -32,7 +31,7 @@
    For mor infomations see https://developers.notion.com/reference/post-database-query"
   ([client database params]
     (let [database-id (:id database)]
-      (api/post "/databases/:id/query" database-id)))
+      (:results (api/post "/databases/:id/query" database-id))))
   ([client database]
     (pages client database {})))
 

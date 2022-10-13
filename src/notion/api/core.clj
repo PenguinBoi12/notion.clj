@@ -61,7 +61,7 @@
 (defn get
   "Fetches all the resources"
   ([client path]
-    (:results (send-request client :get path)))
+    (send-request client :get (build-route path)))
   ([client path id]
     (let [route (build-route path {:id id})]
       (send-request client :get route))))
