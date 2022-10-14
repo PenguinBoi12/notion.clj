@@ -35,3 +35,15 @@
   ([client database]
     (pages client database {})))
 
+(defn search
+  "Searches databases's titles that matches the given query.
+
+   See api/search for the list of options
+
+   Not completly available due to Notion's API limitation
+   (https://developers.notion.com/reference/post-search)"
+  ([client query options]
+    (let [default-options {}]
+      (api/search client query (merge options default-options))))
+  ([client query]
+    (search client query {})))

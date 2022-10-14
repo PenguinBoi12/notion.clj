@@ -26,7 +26,7 @@
     (build-route path {})))
 
 (defn- build-request [client method path params]
-  "Builds a request to the API"
+  "Builds a request to the Notion"
   {:method method,
    :url path
    :form-params params,
@@ -111,6 +111,6 @@
     (println "Warning: Due to API limitation, searchs are performed on :object\n(https://developers.notion.com/reference/post-search)")
     
     (let [params (merge {:query query} options)]
-      (post client "/search" params)))
+      (:results (post client "/search" params))))
   ([client query]
     (search client query {})))

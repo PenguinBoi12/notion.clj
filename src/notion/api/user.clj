@@ -8,7 +8,7 @@
 (defn all
   "Returns all users"
   [client]
-  (:results (api/get client "/users/")))
+  (:results (api/get client "/users")))
 
 (defn find [client id]
   "Finds and return the user with the given id"
