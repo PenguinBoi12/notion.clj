@@ -19,6 +19,10 @@
   [client page]
   (block/delete! client page))
 
+(defn property [client page property_id]
+  (api/get "/pages/:page_id/properties/:property_id"
+    {:page_id (:id page) :property_id property}))
+
 (defn search
   "Searches page's titles that matches the given query.
 

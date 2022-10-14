@@ -3,7 +3,8 @@
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
             [clojure.string :as string]
-            [camel-snake-kebab.core :refer [->kebab-case-keyword]]))
+            [camel-snake-kebab.core :refer [->kebab-case-keyword]])
+  (:import [notion.client Client]))
 
 (defonce ^:private notion-version "2022-06-28")
 (defonce ^:private user-agent (str "notion.clj - Notion v" notion-version))
@@ -58,13 +59,23 @@
   ([client method route]
     (send-request client method route {})))
 
-(defn get
-  "Fetches all the resources"
-  ([client path]
-    (send-request client :get (build-route path)))
-  ([client path id]
-    (let [route (build-route path {:id id})]
-      (send-request client :get route))))
+(defmulti get
+  "Fetches one or multiple resources"
+  (fn [client route & values]
+    (mapv class (into [client route] values) )))
+
+(defmethod get [Client String clojure.lang.PersistentArrayMap]
+  [client route resources]
+  (let [url (build-route route resources)]
+    (send-request client :get url)))
+
+(defmethod get [Client String String]
+  [client route id]
+  (get client route {:id id}))
+
+(defmethod get [Client String]
+  [client route]
+  (get client route {}))
 
 (defn post
   "Creates a new resource"
