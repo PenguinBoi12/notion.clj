@@ -21,7 +21,7 @@
   (if (:has_children block)
     (api/get "/blocks/:id/children") (:id block)))
 
-(defn add-child!
+(defn append!
   "Add a child to the block's childrens"
   [client block]
   (if (:has_children block)
