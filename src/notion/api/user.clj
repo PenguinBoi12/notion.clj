@@ -2,6 +2,17 @@
   (:refer-clojure :exclude [find])
   (:require [notion.api.core :as api]))
 
+(definterface IUser)
+
+(defrecord Person [id name avatar-url type person] IUser)
+
+(defrecord Bot [id name avatar-url type bot] IUser)
+
+(defn build-user [map]
+  (if (= (:type map) "bot")
+    (map->Bot map)
+    (map->Person map)))
+
 (defn bot? [user] 
   (= (:type "bot") "bot"))
 
