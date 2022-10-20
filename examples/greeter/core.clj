@@ -9,5 +9,5 @@
 
 (defn -main [& args]
   (let [client (client/init!)
-        user   (user/find "4175e406b6784e169988c866583daaa6")]
+        user   (user/me client)]
     (greet user)))
