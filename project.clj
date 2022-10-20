@@ -1,8 +1,8 @@
-(defproject notion.clj/notion.clj "0.0.1"
+(defproject notion.clj/notion.clj "1.0.0-SNAPSHOT"
   :description "A notion api wrapper in Clojure"
   :url "https://github.com/penguinboi/notion.clj"
-  :license {:name "Apache License, Version 2.0"
-            :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
+  :license {:name "GNU General Public License v3.0"
+            :url "https://www.gnu.org/licenses/gpl-3.0.html"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/core.async "1.5.648"]
                  [org.clojure/tools.cli "1.0.206"]
@@ -18,4 +18,5 @@
   :main ^:skip-aot notion.core
   :target-path "target/%s"
   :source-paths ["src"]
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :examples {:source-paths ["examples"]}})
